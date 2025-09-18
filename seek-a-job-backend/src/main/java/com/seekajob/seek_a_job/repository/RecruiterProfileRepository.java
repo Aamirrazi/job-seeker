@@ -1,10 +1,15 @@
 package com.seekajob.seek_a_job.repository;
 
-import com.seekajob.seek_a_job.entity.RecruiterProfile;
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.Optional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import com.seekajob.seek_a_job.entity.RecruiterProfile;
+
 public interface RecruiterProfileRepository extends JpaRepository<RecruiterProfile, Long> {
-    Optional<RecruiterProfile> findByUserId(Long userId);
+    
+    @Query("SELECT rp FROM RecruiterProfile rp WHERE rp.user.id = :userId")
+    Optional<RecruiterProfile> findByUserId(@Param("userId") Long userId);
 }
